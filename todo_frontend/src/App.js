@@ -33,6 +33,11 @@ function App() {
     }
   };
 
+  // Remove a task by id
+  const removeTask = (id) => {
+    setTasks((prev) => prev.filter((t) => t.id !== id));
+  };
+
   const completedCount = tasks.filter((t) => t.completed).length;
 
   return (
@@ -62,23 +67,30 @@ function App() {
                   }
                 />
                 <span className="task-text">{task.text}</span>
-                <svg
-                  className="chevron"
-                  viewBox="0 0 12 12"
-                  width="10.36"
-                  height="10.36"
-                  aria-hidden="true"
-                  focusable="false"
+                <button
+                  className="remove-btn"
+                  onClick={() => removeTask(task.id)}
+                  aria-label={`Remove "${task.text}"`}
+                  title="Remove task"
                 >
-                  <path
-                    d="M4 1 L9 6 L4 11"
-                    fill="none"
-                    stroke="var(--muted)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                  <svg
+                    className="remove-icon"
+                    viewBox="0 0 12 12"
+                    width="10.36"
+                    height="10.36"
+                    aria-hidden="true"
+                    focusable="false"
+                  >
+                    <path
+                      d="M3 3 L9 9 M9 3 L3 9"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
               </li>
             ))}
           </ul>
