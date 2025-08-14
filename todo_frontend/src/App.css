@@ -1,104 +1,253 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  /* Design system colors */
+  --color-0f0f0f: #0f0f0f;
+  --color-1a1a1a: #1a1a1a;
+  --color-2a2a2a: #2a2a2a;
+  --color-ffffff: #ffffff;
+  --color-bb86fc: #bb86fc;
+  --color-000000: #000000;
+  --color-696969: #696969;
+  --color-0d0714: #0d0714;
+  --color-1d1825: #1d1825;
+  --color-15101c: #15101c;
+  --color-9e78cf: #9e78cf;
+  --color-78cfb0: #78cfb0;
+  --color-777777: #777777;
+  --color-3e1671: #3e1671;
+
+  /* Spacing tokens (approx) */
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-16: 16px;
+  --space-17: 17px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-76: 76px;
+
+  /* Radii tokens */
+  --radius-5: 5px;
+  --radius-10: 10px;
+  --radius-20: 20px;
+  --radius-25: 25px;
+
+  /* Sizing from Figma */
+  --header-height: 98px;
+  --task-width: 525px;
+  --task-height: 74px;
+  --fab-size: 70px;
+}
+
+/* Theme mappings */
+[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #f8f9fa;
+  --on-surface: #1a1a1a;
+  --on-bg: #1a1a1a;
+  --accent: var(--color-bb86fc);
+  --border: #e9ecef;
+  --muted: #6c757d;
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  --bg: var(--color-0f0f0f);          /* style_0 background */
+  --surface: var(--color-1a1a1a);     /* style_1 and style_5 background */
+  --on-surface: var(--color-ffffff);  /* typo_4/5/6 color */
+  --on-bg: var(--color-ffffff);
+  --accent: var(--color-bb86fc);      /* style_3/6/8 accent */
+  --border: var(--color-2a2a2a);      /* style_1/5 border */
+  --muted: var(--color-696969);       /* style_7 vector color */
 }
 
+/* App wrapper */
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
   min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--on-bg);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: var(--bg-secondary);
+/* Layout container with 960 width from frame */
+.todo-app {
+  max-width: 960px;  /* matches frame width */
+  margin: 0 auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Header group (height 98, background surface, 1px bottom border) */
+.todo-header {
+  height: var(--header-height);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
-  position: relative;
 }
 
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
+/* Text group offset ~76px from left (from Figma x positions) */
+.header-content {
+  padding-left: var(--space-76);
 }
 
-.theme-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
+/* Title: Inter 24/29, weight 400, white in dark */
+.todo-title {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 24px;              /* typo_4 */
+  line-height: 29.045px;        /* typo_4 */
+  color: var(--on-surface);
+}
+
+/* Subtitle: Inter 12/14.52, weight 400, white in dark */
+.todo-subtitle {
+  margin: 4px 0 0 0;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  font-size: 12px;             /* typo_5 */
+  line-height: 14.523px;       /* typo_5 */
+  color: var(--on-surface);
+  opacity: 0.95;
+}
+
+/* Content area */
+.todo-content {
+  flex: 1;
+  padding-top: var(--space-24);
+}
+
+/* Task list aligned with header text (left offset ~76px), width 525, stacked with ~17 gap */
+.task-list {
+  width: var(--task-width);
+  margin: 0;
+  margin-left: var(--space-76);
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-17);
+}
+
+/* Task item container: style_5 (bg surface, 1px border, radius 25), height 74 */
+.task-item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-16);
+  height: var(--task-height);
+  padding: 0 var(--space-24);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-25);
+}
+
+/* Checkbox ellipse: 16x16, 2px accent border (style_6) */
+.checkbox {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  background: transparent;
+  display: grid;
+  place-items: center;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.06s ease;
+}
+.checkbox:active {
+  transform: scale(0.96);
 }
 
-.theme-toggle:hover {
+/* Checked state: filled with accent, show check glyph (style_8 + style_9 vector) */
+.checkbox.checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.checkbox.checked::after {
+  content: '';
+  width: 7px;   /* approx 6.75 from Figma */
+  height: 4px;  /* approx 4.62 from Figma */
+  border: 2px solid var(--color-000000); /* style_9 border color */
+  border-top: 0;
+  border-right: 0;
+  transform: rotate(-45deg);
+  margin-top: -1px;
+}
+
+/* Task label: Inter 16 bold, white (typo_6) */
+.task-text {
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;      /* typo_6 weight */
+  font-size: 16px;       /* typo_6 size */
+  line-height: 19.364px; /* typo_6 line-height */
+  color: var(--on-surface);
+  user-select: none;
+}
+
+/* Right chevron vector ~10.36 size with muted color (#696969 style_7) */
+.chevron {
+  width: 10.5px;
+  height: 10.5px;
+  flex: 0 0 auto;
+}
+
+/* Floating Add Button: 70x70, radius 25, bg accent (style_3) with plus vector (style_4 black) */
+.fab {
+  position: fixed;
+  right: var(--space-40);
+  bottom: var(--space-40);
+  width: var(--fab-size);
+  height: var(--fab-size);
+  border: none;
+  border-radius: var(--radius-25);
+  background: var(--accent);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.24);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.fab:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.28);
 }
-
-.theme-toggle:active {
+.fab:active {
   transform: translateY(0);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Plus icon using pseudo elements with black color (style_4) */
+.fab::before,
+.fab::after {
+  content: '';
+  position: absolute;
+  background: var(--color-000000);
+  border-radius: 2px;
+}
+.fab::before {
+  width: 26px;
+  height: 4px;
+}
+.fab::after {
+  width: 4px;
+  height: 26px;
 }
 
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
+/* Accessibility outline */
+.checkbox:focus-visible,
+.fab:focus-visible,
+.task-item:focus-within {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Responsive: center content on smaller screens */
+@media (max-width: 640px) {
+  .header-content,
+  .task-list {
+    margin-left: 0;
+    padding-left: var(--space-24);
+    padding-right: var(--space-24);
+    width: auto;
   }
 }
